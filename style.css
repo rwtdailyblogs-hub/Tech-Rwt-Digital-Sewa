@@ -524,24 +524,28 @@ background:#e5e7eb;
 grid-template-columns:1fr;
 
 }
+.contact form {
+    padding: 0 10px;
+  }
 
-.contact form{
-   /* Logo Styling */
+  footer {
+    padding: 40px 15px;
+  }
+}
+
+/* Logo Styling */
 .site-logo {
-  max-height: 50px; /* Logo ki height adjust karne ke liye */
+  max-height: 50px;
   width: auto;
   display: block;
   object-fit: contain;
 }
 
-padding:0 10px;
-
-}
-
-footer{
-
-padding:40px 15px;
-
-}
-
+/* Hero Banner Design */
+.hero-banner .banner-img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 20px;
 }

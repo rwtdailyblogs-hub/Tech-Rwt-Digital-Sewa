@@ -361,7 +361,7 @@ All Rights Reserved.
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
   (function(){
-     emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); 
+  emailjs.init("O-jV3dxeSXCGJNZc4");   
   })();
 </script>
 
@@ -382,8 +382,7 @@ All Rights Reserved.
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-
-  // Form submit handler
+// Form submit handler
   const form = document.querySelector('form');
 
   if (form) {
@@ -405,7 +404,7 @@ All Rights Reserved.
         });
 
         // 2. Send Email Notification
-        await emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+        await emailjs.send("service_wvmi2l8", "template_83ch2zv", {
           from_name: name,
           from_email: email,
           phone: phone,
@@ -413,11 +412,16 @@ All Rights Reserved.
           message: message
         });
 
-        document.getElementById('successMessage').style.display = 'block';
+        const successMsg = document.getElementById('successMessage');
+        if (successMsg) successMsg.style.display = 'block';
+        alert("Form submitted successfully!");
         form.reset();
       } catch (error) {
         console.error("Error:", error);
         alert("Form submission failed, please try again.");
+      }
+    });
+  }
       }
     });
   }

@@ -1,65 +1,83 @@
-// ============================
-// TECH RAWAT DIGITAL SEWA
-// script.js
-// ============================
+import { db } from "./firebase.js";
+
+import {
+  collection,
+  addDoc,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
 const form = document.getElementById("leadForm");
 const success = document.getElementById("successMessage");
 
-if(form){
+if (!form) return;
 
-form.addEventListener("submit", function(e){
+form.addEventListener("submit", async (e) => {
 
 e.preventDefault();
 
 const name = document.getElementById("name").value.trim();
+
 const phone = document.getElementById("phone").value.trim();
+
 const service = document.getElementById("service").value;
 
-if(name === ""){
+const district = document.getElementById("district").value.trim();
 
+const message = document.getElementById("message").value.trim();
+
+if(name===""){
 alert("Please enter your name.");
-
 return;
-
 }
 
-if(phone.length < 10){
-
+if(phone.length<10){
 alert("Please enter a valid mobile number.");
-
 return;
-
 }
 
-if(service === ""){
-
+if(service===""){
 alert("Please select a service.");
-
 return;
-
 }
 
-// Success Message
+try{
 
-success.style.display = "block";
+await addDoc(collection(db,"leads"),{
 
-// Form Reset
+name:name,
 
-form.reset();
+phone:phone,
 
-// Auto Hide Success
+service:service,
 
-setTimeout(function(){
+district:district,
 
-success.style.display = "none";
+message:message,
 
-},5000);
+createdAt:serverTimestamp()
 
 });
 
+success.style.display="block";
+
+form.reset();
+
+setTimeout(()=>{
+
+success.style.display="none";
+
+},5000);
+
+}catch(error){
+
+console.error(error);
+
+alert("Something went wrong. Please try again.");
+
 }
+
+});
 
 });

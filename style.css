@@ -526,6 +526,13 @@ grid-template-columns:1fr;
 }
 
 .contact form{
+   /* Logo Styling */
+.site-logo {
+  max-height: 50px; /* Logo ki height adjust karne ke liye */
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
 
 padding:0 10px;
 

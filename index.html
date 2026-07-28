@@ -357,7 +357,71 @@ All Rights Reserved.
 </p>
 
 </footer>
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+<script>
+  (function(){
+     emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); 
+  })();
+</script>
 
+<!-- Firebase & Form Logic -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCVmem2hOxVxN4p98gdqwD_npv1LJXeBys",
+    authDomain: "tech-rwt-digital-sewa.firebaseapp.com",
+    projectId: "tech-rwt-digital-sewa",
+    storageBucket: "tech-rwt-digital-sewa.firebasestorage.app",
+    messagingSenderId: "180550527219",
+    appId: "1:180550527219:web:8e806952a2f06bd57aef86",
+    measurementId: "G-PXXGWLFCQM"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Form submit handler
+  const form = document.querySelector('form');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('name')?.value || '';
+      const phone = document.getElementById('phone')?.value || '';
+      const email = document.getElementById('email')?.value || '';
+      const service = document.getElementById('service')?.value || '';
+      const district = document.getElementById('district')?.value || '';
+      const message = document.getElementById('message')?.value || '';
+
+      try {
+        // 1. Save to Firestore DB
+        await addDoc(collection(db, "form_submissions"), {
+          name, phone, email, service, district, message,
+          timestamp: new Date()
+        });
+
+        // 2. Send Email Notification
+        await emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+          from_name: name,
+          from_email: email,
+          phone: phone,
+          service: service,
+          message: message
+        });
+
+        document.getElementById('successMessage').style.display = 'block';
+        form.reset();
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Form submission failed, please try again.");
+      }
+    });
+  }
+</script>
 <script type="module" src="firebase.js"></script>
 <script type="module" src="script.js"></script>
 
